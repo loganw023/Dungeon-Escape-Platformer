@@ -16,6 +16,8 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] float dashSpeed = 2f;
     [SerializeField] float dashDuration = 0.5f;
     [SerializeField] float dashCooldown = 1f;
+    [SerializeField] int maxJumps = 1;
+    int jumpsRemaining;
 
     Animator myAnimator;
     Vector2 moveInput;
@@ -29,6 +31,7 @@ public class NewBehaviourScript : MonoBehaviour
     float dashTimeRemaining = 0f;
     float lastDashTime = -Mathf.Infinity;
     bool isDashing = false;
+    bool wasGrounded = false;
 
     void Start()
     {
@@ -38,6 +41,7 @@ public class NewBehaviourScript : MonoBehaviour
         originalGravity = myRigidbody.gravityScale;
         myFeetCollider = GetComponent<BoxCollider2D>();
         AudioSource.PlayClipAtPoint(soundtrack, Camera.main.transform.position);
+        jumpsRemaining = maxJumps - 1;
     }
 
     void Update()
@@ -59,6 +63,17 @@ public class NewBehaviourScript : MonoBehaviour
             }
             return;
         }
+
+        bool isGrounded = myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        if (GameSession.hasDoubleJump)
+        {
+            maxJumps = 2;
+        }
+        if (isGrounded && !wasGrounded)
+        {
+            jumpsRemaining = maxJumps;
+        }
+        wasGrounded = isGrounded;
         Run();
         FlipSprite();
         ClimbLadder();
@@ -80,9 +95,10 @@ public class NewBehaviourScript : MonoBehaviour
         {
             return;
         }
-        if (value.isPressed && myFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        if (value.isPressed && jumpsRemaining > 0)
         {
             myRigidbody.velocity += new Vector2(0f, jumpHeight);
+            jumpsRemaining--;
         }
     }
 
@@ -186,6 +202,11 @@ public class NewBehaviourScript : MonoBehaviour
         if (other.tag == "Dash")
         {
             FindObjectOfType<GameSession>().collectDash();
+            Destroy(other.gameObject);
+        }
+        if (other.tag == "DoubleJump")
+        {
+            FindObjectOfType<GameSession>().collectDoubleJump();
             Destroy(other.gameObject);
         }
     }

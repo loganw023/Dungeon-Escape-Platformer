@@ -9,8 +9,12 @@ public class GameSession : MonoBehaviour
     [SerializeField] int playerLives = 3;
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI abilitiesText;
     [SerializeField] int score;
     public static bool hasDash = false;
+    public static bool hasDoubleJump = false;
+    [SerializeField] int scoreForLife;
+    int scoreThreshold = 2500;
     void Awake()
     {
         int numGameSessions = FindObjectsOfType<GameSession>().Length;
@@ -26,8 +30,9 @@ public class GameSession : MonoBehaviour
 
     void Start()
     {
-        livesText.text = playerLives.ToString();
-        scoreText.text = score.ToString();
+        livesText.text = "Lives: " + playerLives.ToString();
+        scoreText.text = "Score: " + score.ToString();
+        abilitiesText.text = "Abilities: \n" + "Dash: " + hasDash.ToString() + "\n" + "Double Jump: " + hasDoubleJump.ToString(); 
     }
 
     public void PlayerDeath()
@@ -45,7 +50,14 @@ public class GameSession : MonoBehaviour
     public void addScore(int addPoints)
     {
         score += addPoints;
-        scoreText.text = score.ToString();
+        scoreForLife += addPoints;
+        scoreText.text = "Score: " + score.ToString();
+        while (scoreForLife >= scoreThreshold)
+        {
+            playerLives += 1;
+            livesText.text = "Lives: " + playerLives.ToString();
+            scoreForLife -= scoreThreshold;
+        }
     }
 
     void ResetGameSession()
@@ -60,11 +72,18 @@ public class GameSession : MonoBehaviour
         playerLives -= 1;
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
-        livesText.text = playerLives.ToString();
+        livesText.text = "Lives: " + playerLives.ToString();
     }
 
     public void collectDash()
     {
         hasDash = true;
+        abilitiesText.text = "Abilities: \n" + "Dash: " + hasDash.ToString() + "\n" + "Double Jump: " + hasDoubleJump.ToString(); 
+    }
+
+    public void collectDoubleJump()
+    {
+        hasDoubleJump = true;
+        abilitiesText.text = "Abilities: \n" + "Dash: " + hasDash.ToString() + "\n" + "Double Jump: " + hasDoubleJump.ToString(); 
     }
 }

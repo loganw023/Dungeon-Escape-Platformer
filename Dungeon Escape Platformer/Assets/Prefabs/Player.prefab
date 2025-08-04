@@ -38,7 +38,7 @@ Transform:
   m_Children:
   - {fileID: 3274493501075009339}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8891390415445868882
 Animator:
@@ -228,6 +228,7 @@ MonoBehaviour:
   dashSpeed: 11
   dashDuration: 0.35
   dashCooldown: 1
+  maxJumps: 1
 --- !u!61 &363555737510282232
 BoxCollider2D:
   m_ObjectHideFlags: 0

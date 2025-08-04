@@ -25,7 +25,7 @@ public class Exit : MonoBehaviour
     {
         myAnimator.SetBool("open", true);
         AudioSource.PlayClipAtPoint(win, Camera.main.transform.position);
-        yield return new WaitForSecondsRealtime(2);
+        yield return new WaitForSecondsRealtime(1);
         myAnimator.SetBool("open", false);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         int nextSceneIndex = currentSceneIndex + 1;
