@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7104865146561620939}
   m_Layer: 13
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 691349157
-  m_SortingLayer: 8
+  m_SortingLayer: 9
   m_SortingOrder: 0
   m_Sprite: {fileID: 1006653785, guid: 0eb5041be300a664d83930be2aa35985, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -171,4 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c97442587d95844ad7e4e6da2fcffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 20
+  bulletSpeed: 15
+  enemyPoints: 250
+  slimeSFX: {fileID: 8300000, guid: 031198e654ab6dd43b5c175cfe709ce6, type: 3}

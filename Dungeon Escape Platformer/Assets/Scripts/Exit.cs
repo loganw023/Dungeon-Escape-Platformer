@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Exit : MonoBehaviour
 {
+    [SerializeField] AudioClip win;
     Animator myAnimator;
 
     void Start()
@@ -14,12 +15,16 @@ public class Exit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        StartCoroutine(LoadNextLevel());
+        if (other.tag == "Player")
+        {
+            StartCoroutine(LoadNextLevel());
+        }
     }
 
     IEnumerator LoadNextLevel()
     {
         myAnimator.SetBool("open", true);
+        AudioSource.PlayClipAtPoint(win, Camera.main.transform.position);
         yield return new WaitForSecondsRealtime(2);
         myAnimator.SetBool("open", false);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -29,9 +34,7 @@ public class Exit : MonoBehaviour
         {
             nextSceneIndex = 0;
         }
-
+        FindObjectOfType<ScenePersist>().ResetScenePersist();
         SceneManager.LoadScene(nextSceneIndex);
-
-
     }
 }

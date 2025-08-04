@@ -12,7 +12,10 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gun;
     [SerializeField] float fireCooldown = 1f;
-
+    [SerializeField] AudioClip soundtrack;
+    [SerializeField] float dashSpeed = 2f;
+    [SerializeField] float dashDuration = 0.5f;
+    [SerializeField] float dashCooldown = 1f;
 
     Animator myAnimator;
     Vector2 moveInput;
@@ -23,6 +26,9 @@ public class NewBehaviourScript : MonoBehaviour
     float originalGravity;
     bool isAlive = true;
     float lastFireTime = -Mathf.Infinity;
+    float dashTimeRemaining = 0f;
+    float lastDashTime = -Mathf.Infinity;
+    bool isDashing = false;
 
     void Start()
     {
@@ -31,12 +37,26 @@ public class NewBehaviourScript : MonoBehaviour
         myBodyCollider = GetComponent<CapsuleCollider2D>();
         originalGravity = myRigidbody.gravityScale;
         myFeetCollider = GetComponent<BoxCollider2D>();
+        AudioSource.PlayClipAtPoint(soundtrack, Camera.main.transform.position);
     }
 
     void Update()
     {
         if (!isAlive)
         {
+            return;
+        }
+        if (isDashing)
+        {
+            float direction = transform.localScale.x;
+            myRigidbody.velocity = new Vector2(direction * dashSpeed, 0f);
+            dashTimeRemaining -= Time.deltaTime;
+
+            if (dashTimeRemaining <= 0f)
+            {
+                isDashing = false;
+                myAnimator.SetBool("isDashing", false);
+            }
             return;
         }
         Run();
@@ -123,11 +143,12 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Die()
     {
-        if (myRigidbody.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazard")))
+        if (myRigidbody.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazard")) && isDashing == false)
         {
             isAlive = false;
             myAnimator.SetTrigger("death");
             myRigidbody.velocity = deathdance;
+            FindObjectOfType<GameSession>().PlayerDeath();
         }
     }
 
@@ -143,6 +164,29 @@ public class NewBehaviourScript : MonoBehaviour
             Instantiate(bullet, gun.position, transform.rotation);
             lastFireTime = Time.time;
         }
-        
+    }
+
+    void OnDash(InputValue value)
+    {
+        if (!isAlive || isDashing)
+        {
+            return;
+        }
+        else if (Time.time - lastDashTime >= dashCooldown && GameSession.hasDash)
+        {
+            isDashing = true;
+            myAnimator.SetBool("isDashing", true);
+            dashTimeRemaining = dashDuration;
+            lastDashTime = Time.time;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Dash")
+        {
+            FindObjectOfType<GameSession>().collectDash();
+            Destroy(other.gameObject);
+        }
     }
 }
