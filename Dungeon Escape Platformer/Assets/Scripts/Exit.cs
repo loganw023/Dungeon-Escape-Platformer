@@ -18,6 +18,7 @@ public class Exit : MonoBehaviour
         if (other.tag == "Player")
         {
             StartCoroutine(LoadNextLevel());
+            FindObjectOfType<GameSession>().StopTimer();
         }
     }
 

@@ -97,6 +97,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
         if (value.isPressed && jumpsRemaining > 0)
         {
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0);
             myRigidbody.velocity += new Vector2(0f, jumpHeight);
             jumpsRemaining--;
         }

@@ -9,9 +9,11 @@ public class SlimeMovement : MonoBehaviour
     [SerializeField] int enemyPoints = 250;
     [SerializeField] public int enemyHealth = 1;
     [SerializeField] AudioClip slimeSFX;
+    SpriteRenderer spriteRenderer;
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -40,7 +42,16 @@ public class SlimeMovement : MonoBehaviour
         {
             Destroy(other.gameObject);
             enemyHealth -= 1;
+            StartCoroutine(FlashRed());
         }
+    }
+
+    IEnumerator FlashRed()
+    {
+        Color originalColor = spriteRenderer.color;
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSecondsRealtime(0.1f);
+        spriteRenderer.color = originalColor;
     }
 
     void FlipDirection()

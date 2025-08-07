@@ -38,7 +38,7 @@ Transform:
   m_Children:
   - {fileID: 3274493501075009339}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8891390415445868882
 Animator:
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 5
-  jumpHeight: 11
+  jumpHeight: 11.5
   climbSpeed: 5
   deathdance: {x: 30, y: 30}
   bullet: {fileID: 2020888296086507973, guid: 47ec4dbb0218f564085a7e2d08ce6987, type: 3}
