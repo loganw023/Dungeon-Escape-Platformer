@@ -13,18 +13,24 @@ EditorBuildSettings:
     guid: 21547e0e8ef3bbe45ade6bd5ec7834db
   - enabled: 1
     path: Assets/Levels/Level 3.unity
-    guid: cc6ea5d7738ffc948949dbc0e17a111f
+    guid: 10d7e1197c196b54f8970edc6f142d9b
   - enabled: 1
     path: Assets/Levels/Level 4.unity
-    guid: c8d6829382cb3834586dbabe315b77db
+    guid: cc6ea5d7738ffc948949dbc0e17a111f
   - enabled: 1
     path: Assets/Levels/Level 5.unity
-    guid: acc67429676f4664eb2038558146cb2e
+    guid: c8d6829382cb3834586dbabe315b77db
   - enabled: 1
     path: Assets/Levels/Level 6.unity
-    guid: c88aaa5573693fd44ad36cf90c4bd783
+    guid: dde4f431f252c5e42be2c101ee9e2e60
   - enabled: 1
     path: Assets/Levels/Level 7.unity
+    guid: acc67429676f4664eb2038558146cb2e
+  - enabled: 1
+    path: Assets/Levels/Level 8.unity
+    guid: c88aaa5573693fd44ad36cf90c4bd783
+  - enabled: 1
+    path: Assets/Levels/Level 9.unity
     guid: f064da601cb6d664db43ac03ff705606
   - enabled: 1
     path: Assets/Levels/Win.unity

@@ -27347,8 +27347,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "WASD/Dpad to move. \nSpace/South button to jump. \nLeft click/RT to shoot.
-    \nShift/East button to dash (when unlocked). \nEvery 2500 score, you unlock an
-    extra life!"
+    \nShift/East button to dash (when unlocked). \nKill the slimes, the birds are
+    unkillable... "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9004a7ec65001bf4ab9911cb538aadfd, type: 2}
   m_sharedMaterial: {fileID: 834236812734323006, guid: 9004a7ec65001bf4ab9911cb538aadfd, type: 2}
@@ -27375,8 +27375,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

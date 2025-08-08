@@ -9,9 +9,11 @@ public class GameSession : MonoBehaviour
     [SerializeField] int playerLives = 3;
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] TextMeshProUGUI abilitiesText;
+    [SerializeField] TextMeshProUGUI messageText;
     [SerializeField] TextMeshProUGUI currentTimeText;
     [SerializeField] TextMeshProUGUI bestTimeText;
+    [SerializeField] float fadeDuration = 0.5f;
+    [SerializeField] float holdTime = 2f;
     [SerializeField] int score;
     public static bool hasDash = false;
     public static bool hasDoubleJump = false;
@@ -22,6 +24,7 @@ public class GameSession : MonoBehaviour
     float bestTime;
     string levelKey;
     string currentLevelName;
+    private Coroutine messageRoutine;
 
     void OnEnable()
     {
@@ -49,8 +52,12 @@ public class GameSession : MonoBehaviour
     {
         livesText.text = "Lives: " + playerLives.ToString();
         scoreText.text = "Score: " + score.ToString();
-        abilitiesText.text = "Abilities: \n" + "Dash: " + hasDash.ToString() + "\n" + "Double Jump: " + hasDoubleJump.ToString();
         InitializeTimerForLevel();
+        if (messageText != null)
+        {
+            messageText.gameObject.SetActive(false);
+            messageText.alpha = 0;
+        }
     }
 
     void Update()
@@ -91,6 +98,7 @@ public class GameSession : MonoBehaviour
         while (scoreForLife >= scoreThreshold)
         {
             playerLives += 1;
+            ShowMessage("+1 Life");
             livesText.text = "Lives: " + playerLives.ToString();
             scoreForLife -= scoreThreshold;
         }
@@ -114,13 +122,13 @@ public class GameSession : MonoBehaviour
     public void collectDash()
     {
         hasDash = true;
-        abilitiesText.text = "Abilities: \n" + "Dash: " + hasDash.ToString() + "\n" + "Double Jump: " + hasDoubleJump.ToString();
+        ShowMessage("Dash Unlocked!");
     }
 
     public void collectDoubleJump()
     {
         hasDoubleJump = true;
-        abilitiesText.text = "Abilities: \n" + "Dash: " + hasDash.ToString() + "\n" + "Double Jump: " + hasDoubleJump.ToString();
+        ShowMessage("Double Jump Unlocked!");
     }
 
     public void StopTimer()
@@ -130,6 +138,7 @@ public class GameSession : MonoBehaviour
         if (timer < bestTime)
         {
             bestTime = timer;
+            ShowMessage("New Best Time!");
             PlayerPrefs.SetFloat(levelKey, bestTime);
             PlayerPrefs.Save();
             if (bestTimeText != null)
@@ -156,5 +165,45 @@ public class GameSession : MonoBehaviour
         {
             bestTimeText.text = bestTime == float.MaxValue ? "Best: --" : "Best: " + bestTime.ToString("F2") + "s";
         }
+    }
+
+    public void ShowMessage(string message)
+    {
+        if (messageRoutine != null)
+            StopCoroutine(messageRoutine);
+
+        messageRoutine = StartCoroutine(ShowMessageRoutine(message));
+    }
+
+    IEnumerator ShowMessageRoutine(string message)
+    {
+        if (messageText == null)
+        {
+            yield break;
+        }
+
+        messageText.text = message;
+        messageText.gameObject.SetActive(true);
+
+        yield return StartCoroutine(FadeTextAlpha(0f, 1f, fadeDuration));
+
+        yield return new WaitForSecondsRealtime(holdTime);
+
+        yield return StartCoroutine(FadeTextAlpha(1f, 0f, fadeDuration));
+
+        messageText.gameObject.SetActive(false);
+    }
+
+    IEnumerator FadeTextAlpha(float from, float to, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(from, to, elapsed / duration);
+            messageText.alpha = alpha;
+            yield return null;
+        }
+        messageText.alpha = to;
     }
 }

@@ -29,6 +29,14 @@ public class BirdMovement : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Enemy")
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
     void FlipDirection()
     {
         transform.localScale = new Vector2((Mathf.Sign(myRigidbody.velocity.x)), 1f);
