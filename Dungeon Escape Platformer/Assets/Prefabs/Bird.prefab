@@ -114,19 +114,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9078595142438394986, guid: 2c9a224d1c27d1d4d8e5c7eb02cf0b3c, type: 3}
       propertyPath: m_Size.x
-      value: 1.3553385
+      value: 1.2992014
       objectReference: {fileID: 0}
     - target: {fileID: 9078595142438394986, guid: 2c9a224d1c27d1d4d8e5c7eb02cf0b3c, type: 3}
       propertyPath: m_Size.y
-      value: 1.5253682
+      value: 1.4617486
       objectReference: {fileID: 0}
     - target: {fileID: 9078595142438394986, guid: 2c9a224d1c27d1d4d8e5c7eb02cf0b3c, type: 3}
       propertyPath: m_Offset.x
-      value: -0.07002288
+      value: -0.04195434
       objectReference: {fileID: 0}
     - target: {fileID: 9078595142438394986, guid: 2c9a224d1c27d1d4d8e5c7eb02cf0b3c, type: 3}
       propertyPath: m_Offset.y
-      value: -0.07665515
+      value: -0.044845343
       objectReference: {fileID: 0}
     - target: {fileID: 9158250026029509603, guid: 2c9a224d1c27d1d4d8e5c7eb02cf0b3c, type: 3}
       propertyPath: m_Name
@@ -160,7 +160,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  enemyPoints: 650
-  enemyHealth: 5
-  slimeSFX: {fileID: 8300000, guid: 031198e654ab6dd43b5c175cfe709ce6, type: 3}
   flipInterval: 2
